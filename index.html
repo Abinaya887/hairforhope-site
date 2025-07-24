@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>HairForHope</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
-
   <style>
     body {
       font-family: 'Montserrat', sans-serif;
@@ -87,6 +86,10 @@
       color: white;
       padding: 1rem;
     }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
@@ -128,18 +131,9 @@
   <section id="stories">
     <h2>Stories of Hope</h2>
     <div class="stories">
-      <article>
-        <h3>🌟 Priya's Smile</h3>
-        <p>Donated hair gave Priya her confidence back after treatment.</p>
-      </article>
-      <article>
-        <h3>🌟 Raj’s Graduation</h3>
-        <p>Raj wore his custom wig proudly on stage.</p>
-      </article>
-      <article>
-        <h3>🌟 Meera & Her Sister</h3>
-        <p>A powerful donation that bonded siblings forever.</p>
-      </article>
+      <article><h3>🌟 Priya's Smile</h3><p>Donated hair gave Priya her confidence back after treatment.</p></article>
+      <article><h3>🌟 Raj’s Graduation</h3><p>Raj wore his custom wig proudly on stage.</p></article>
+      <article><h3>🌟 Meera & Her Sister</h3><p>A powerful donation that bonded siblings forever.</p></article>
     </div>
   </section>
 
@@ -161,6 +155,21 @@
       <textarea id="message" name="message" rows="4" placeholder="Message (optional)"></textarea>
       <button type="submit">Submit Pledge</button>
     </form>
+
+    <div id="successMessage" style="display:none; margin-top:2rem;">
+      <div style="animation: fadeIn 1s ease-in-out; padding: 1.5rem; background-color: #dff9fb; border-left: 8px solid #00b894; border-radius: 10px; font-weight: bold; color: #2d3436; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        ✅ Thanks for pledging, <span id="donorName"></span>! Your certificate is below 🎓
+      </div>
+    </div>
+
+    <div id="certificate" style="display:none; margin-top:2rem; text-align:center;">
+      <div style="background: linear-gradient(135deg, #ff9ff3, #feca57); padding: 2rem; border-radius: 12px; color: white; font-size: 1.2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+        🎓 <strong>Hair Donation Certificate</strong><br /><br />
+        This is to certify that <strong><span id="certName"></span></strong><br />
+        has pledged to donate their hair to support cancer warriors.<br /><br />
+        With gratitude, 💖 HairForHope Team
+      </div>
+    </div>
   </section>
 
   <section id="contact">
@@ -172,7 +181,7 @@
     &copy; 2025 HairForHope. All rights reserved.
   </footer>
 
-  <!-- Firebase Modular v9 Submission Script -->
+  <!-- Firebase Submission Script with Animation and Certificate -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
     import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
@@ -181,45 +190,4 @@
       apiKey: "AIzaSyBQ8yuBzMQypjKCr7-MEcTjTdlvNpXVjjk",
       authDomain: "hairdonationsystem-53195.firebaseapp.com",
       projectId: "hairdonationsystem-53195",
-      storageBucket: "hairdonationsystem-53195.appspot.com",
-      messagingSenderId: "929533773900",
-      appId: "1:929533773900:web:9730c590456a18de6f0ce9",
-      measurementId: "G-BM0CH9MP6D",
-      databaseURL: "https://hairdonationsystem-53195-default-rtdb.asia-southeast1.firebasedatabase.app"
-      
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    document.addEventListener("DOMContentLoaded", function () {
-      const form = document.getElementById("donorForm");
-
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
-
-        const data = {
-          name: document.getElementById("name").value,
-          email: document.getElementById("email").value,
-          phone: document.getElementById("phone").value,
-          location: document.getElementById("location").value,
-          hairlength: document.getElementById("hairlength").value,
-          condition: document.getElementById("condition").value,
-          message: document.getElementById("message").value
-        };
-
-        push(ref(db, "pledges"), data)
-          .then(() => {
-            alert("Thanks for pledging 💖");
-            form.reset();
-          })
-          .catch((error) => {
-            alert("Oops! Something went wrong 😢");
-            console.error(error);
-          });
-      });
-    });
-  </script>
-
-</body>
-</html>
+      storage
