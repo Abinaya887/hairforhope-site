@@ -6,23 +6,6 @@
   <title>HairForHope</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js"></script>
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyBQ8yuBzMQypjKCr7-MEcTjTdlvNpXVjjk",
-      authDomain: "hairdonationsystem-53195.firebaseapp.com",
-      projectId: "hairdonationsystem-53195",
-      storageBucket: "hairdonationsystem-53195.appspot.com",
-      messagingSenderId: "929533773900",
-      appId: "1:929533773900:web:9730c590456a18de6f0ce9",
-      measurementId: "G-BM0CH9MP6D"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-  </script>
-
   <style>
     body {
       font-family: 'Montserrat', sans-serif;
@@ -189,8 +172,25 @@
     &copy; 2025 HairForHope. All rights reserved.
   </footer>
 
-  <!-- Firebase Submission Script -->
-  <script>
+  <!-- Firebase Modular v9 Submission Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
+    import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBQ8yuBzMQypjKCr7-MEcTjTdlvNpXVjjk",
+      authDomain: "hairdonationsystem-53195.firebaseapp.com",
+      projectId: "hairdonationsystem-53195",
+      storageBucket: "hairdonationsystem-53195.appspot.com",
+      messagingSenderId: "929533773900",
+      appId: "1:929533773900:web:9730c590456a18de6f0ce9",
+      measurementId: "G-BM0CH9MP6D",
+      databaseURL: "https://hairdonationsystem-53195-default-rtdb.firebaseio.com"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
     document.addEventListener("DOMContentLoaded", function () {
       const form = document.getElementById("donorForm");
 
@@ -207,7 +207,7 @@
           message: document.getElementById("message").value
         };
 
-        firebase.database().ref("pledges").push(data)
+        push(ref(db, "pledges"), data)
           .then(() => {
             alert("Thanks for pledging 💖");
             form.reset();
