@@ -1,19 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>HairForHope</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBQ8yuBzMQypjKCr7-MEcTjTdlvNpXVjjk",
+      authDomain: "hairdonationsystem-53195.firebaseapp.com",
+      projectId: "hairdonationsystem-53195",
+      storageBucket: "hairdonationsystem-53195.appspot.com",
+      messagingSenderId: "929533773900",
+      appId: "1:929533773900:web:9730c590456a18de6f0ce9",
+      measurementId: "G-BM0CH9MP6D"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+  </script>
   <style>
-    /* Base Styles */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
     body {
       font-family: 'Montserrat', sans-serif;
+      margin: 0;
       background-color: #fdf6f8;
       color: #333;
       scroll-behavior: smooth;
@@ -21,137 +32,75 @@
     header, section, footer {
       padding: 2rem;
       text-align: center;
-      animation: fadeInUp 0.8s ease both;
     }
-
-    /* Header */
     header {
       background-color: #ff8ba7;
       color: white;
     }
-
-    /* Navigation */
     nav {
       background-color: #fff;
       padding: 1rem;
       font-weight: bold;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
       position: sticky;
       top: 0;
-      z-index: 999;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      z-index: 99;
     }
     nav a {
       margin: 0 15px;
       text-decoration: none;
       color: #ff6f91;
-      transition: color 0.3s ease;
     }
-    nav a:hover {
-      color: #c9184a;
-    }
-
-    /* Section Titles */
     h2 {
       color: #ff6f91;
       margin-bottom: 1rem;
-      font-size: 2rem;
     }
-
-    /* CTA Buttons */
     .cta-buttons a, button {
-      display: inline-block;
-      margin: 10px;
-      padding: 0.8rem 1.5rem;
       background-color: #ff8ba7;
       color: white;
       text-decoration: none;
       border: none;
       border-radius: 25px;
+      padding: 0.8rem 1.5rem;
+      margin: 10px;
       font-weight: bold;
       cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: 0.3s ease;
     }
     button:hover, .cta-buttons a:hover {
       background-color: #ff6f91;
-      transform: scale(1.05);
     }
-
-    /* Form Styles */
+    form {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
     form input, form select, form textarea {
       width: 100%;
       padding: 0.8rem;
       margin-bottom: 1rem;
       border-radius: 6px;
       border: 1px solid #ccc;
-      transition: border-color 0.3s ease;
     }
-    form input:focus, form textarea:focus, form select:focus {
-      border-color: #ff6f91;
-      outline: none;
-    }
-    form {
-      max-width: 600px;
-      margin: 2rem auto;
-      background: #fff;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-    }
-
-    /* Story Cards */
     .stories {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 1.5rem;
       margin-top: 2rem;
-      animation: fadeInUp 1s ease both;
     }
     .stories article {
-      background-color: #fff;
+      background-color: white;
       padding: 1.5rem;
       border-radius: 10px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    .stories article:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-    }
-
-    /* Footer */
     footer {
       background-color: #ff8ba7;
       color: white;
       padding: 1rem;
-      animation: fadeInUp 1.2s ease both;
-    }
-
-    /* Animation Keyframes */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Responsive Design */
-    @media (max-width: 600px) {
-      nav a {
-        display: block;
-        margin: 10px 0;
-        text-align: center;
-      }
-      h1 {
-        font-size: 1.8rem;
-      }
-      .cta-buttons a {
-        padding: 0.6rem 1.2rem;
-      }
     }
   </style>
 </head>
@@ -182,69 +131,89 @@
 
   <section id="donate" style="background-color:#fff0f5;">
     <h2>How to Donate</h2>
-    <p>Follow these steps to make a meaningful hair donation:</p>
-    <ol style="text-align: left; max-width:600px; margin: auto; line-height: 1.6;">
-      <li><strong>Grow & Prep:</strong> Minimum 10-12 inches, clean and untreated.</li>
-      <li><strong>Secure:</strong> Tie into a ponytail or braid.</li>
-      <li><strong>Cut:</strong> Snip above the band—get a stylist's help if needed!</li>
-      <li><strong>Pack:</strong> Seal in a ziplock with name and hair info.</li>
-      <li><strong>Send:</strong> Ship to a donation center near you.</li>
+    <ol style="text-align: left; max-width:600px; margin:auto;">
+      <li><strong>Grow & Prep:</strong> Minimum 10–12 inches, clean & untreated.</li>
+      <li><strong>Secure:</strong> Tie into ponytail or braid.</li>
+      <li><strong>Cut:</strong> Snip above the band.</li>
+      <li><strong>Pack:</strong> Ziplock with your details.</li>
+      <li><strong>Send:</strong> Mail to nearest donation center.</li>
     </ol>
   </section>
 
   <section id="stories">
     <h2>Stories of Hope</h2>
-    <p>Real voices. Real transformations.</p>
     <div class="stories">
       <article>
-        <h3>🌟 Priya's New Smile</h3>
-        <p>After chemotherapy, Priya received donated hair and regained confidence—and a smile.</p>
+        <h3>🌟 Priya's Smile</h3>
+        <p>Donated hair gave Priya her confidence back after treatment.</p>
       </article>
       <article>
-        <h3>🌟 Raj’s Graduation Day</h3>
-        <p>Raj walked the stage with a custom wig and bright hope for the future.</p>
+        <h3>🌟 Raj’s Graduation</h3>
+        <p>Raj wore his custom wig proudly on stage.</p>
       </article>
       <article>
         <h3>🌟 Meera & Her Sister</h3>
-        <p>A heartfelt sibling donation that strengthened their bond and lit up Meera’s recovery.</p>
+        <p>A powerful donation that bonded siblings forever.</p>
       </article>
     </div>
   </section>
 
   <section id="signup" style="background-color: #f8f0f4;">
     <h2>Become a Hair Donor</h2>
-    <p>Submit your pledge to be a part of our mission of love and healing.</p>
-    <form>
-      <label for="name">Full Name</label>
-      <input type="text" id="name" required>
-
-      <label for="email">Email Address</label>
-      <input type="email" id="email" required>
-
-      <label for="phone">Phone Number</label>
-      <input type="tel" id="phone">
-
-      <label for="location">City & State</label>
-      <input type="text" id="location">
-
-      <label for="hairlength">Hair Length (in inches)</label>
-      <input type="number" id="hairlength" min="10" required>
-
-      <label for="condition">Hair Type</label>
-      <select id="condition" required>
-        <option value="">Choose</option>
+    <form id="donorForm">
+      <input type="text" name="name" placeholder="Full Name" required />
+      <input type="email" name="email" placeholder="Email Address" required />
+      <input type="tel" name="phone" placeholder="Phone Number" />
+      <input type="text" name="location" placeholder="City & State" />
+      <input type="number" name="hairlength" min="10" placeholder="Hair Length (in inches)" required />
+      <select name="condition" required>
+        <option value="">Select Hair Type</option>
         <option value="natural">Natural / Untreated</option>
         <option value="colored">Colored</option>
         <option value="curly">Curly</option>
         <option value="straight">Straight</option>
       </select>
-
-      <label for="message">Message (optional)</label>
-      <textarea id="message" rows="4"></textarea>
-
+      <textarea name="message" rows="4" placeholder="Message (optional)"></textarea>
       <button type="submit">Submit Pledge</button>
     </form>
   </section>
 
   <section id="contact">
-    <h2>Contact Us
+    <h2>Contact Us</h2>
+    <p>Questions or collaborations? Email: <strong>support@hairforhope.org</strong></p>
+  </section>
+
+  <footer>
+    &copy; 2025 HairForHope. All rights reserved.
+  </footer>
+
+  <!-- Firebase Form Submission -->
+  <script>
+    const form = document.getElementById("donorForm");
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const data = {
+        name: form.name.value,
+        email: form.email.value,
+        phone: form.phone.value,
+        location: form.location.value,
+        hairlength: form.hairlength.value,
+        condition: form.condition.value,
+        message: form.message.value
+      };
+
+      firebase.database().ref("pledges").push(data)
+        .then(() => {
+          alert("Thanks for pledging 💖");
+          form.reset();
+        })
+        .catch((error) => {
+          alert("Oops! Something went wrong 😢");
+          console.error(error);
+        });
+    });
+  </script>
+
+</body>
+</html>
