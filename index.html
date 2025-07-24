@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>HairForHope</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js"></script>
@@ -21,6 +22,7 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
   </script>
+
   <style>
     body {
       font-family: 'Montserrat', sans-serif;
@@ -161,57 +163,60 @@
   <section id="signup" style="background-color: #f8f0f4;">
     <h2>Become a Hair Donor</h2>
     <form id="donorForm">
-      <input type="text" name="name" placeholder="Full Name" required />
-      <input type="email" name="email" placeholder="Email Address" required />
-      <input type="tel" name="phone" placeholder="Phone Number" />
-      <input type="text" name="location" placeholder="City & State" />
-      <input type="number" name="hairlength" min="10" placeholder="Hair Length (in inches)" required />
-      <select name="condition" required>
+      <input type="text" id="name" name="name" placeholder="Full Name" required />
+      <input type="email" id="email" name="email" placeholder="Email Address" required />
+      <input type="tel" id="phone" name="phone" placeholder="Phone Number" />
+      <input type="text" id="location" name="location" placeholder="City & State" />
+      <input type="number" id="hairlength" name="hairlength" min="10" placeholder="Hair Length (in inches)" required />
+      <select id="condition" name="condition" required>
         <option value="">Select Hair Type</option>
         <option value="natural">Natural / Untreated</option>
         <option value="colored">Colored</option>
         <option value="curly">Curly</option>
         <option value="straight">Straight</option>
       </select>
-      <textarea name="message" rows="4" placeholder="Message (optional)"></textarea>
-      <button type="submit">Submit</button>
+      <textarea id="message" name="message" rows="4" placeholder="Message (optional)"></textarea>
+      <button type="submit">Submit Pledge</button>
     </form>
   </section>
 
   <section id="contact">
     <h2>Contact Us</h2>
-    <p>Questions or collaborations? Email: <strong>support@hairforhope.org</strong></p>
+    <p>Email: <strong>support@hairforhope.org</strong></p>
   </section>
 
   <footer>
     &copy; 2025 HairForHope. All rights reserved.
   </footer>
 
-  <!-- Firebase Form Submission -->
+  <!-- Firebase Submission Script -->
   <script>
-    const form = document.getElementById("donorForm");
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.getElementById("donorForm");
 
-      const data = {
-        name: form.name.value,
-        email: form.email.value,
-        phone: form.phone.value,
-        location: form.location.value,
-        hairlength: form.hairlength.value,
-        condition: form.condition.value,
-        message: form.message.value
-      };
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
 
-      firebase.database().ref("pledges").push(data)
-        .then(() => {
-          alert("Thanks for pledging 💖");
-          form.reset();
-        })
-        .catch((error) => {
-          alert("Oops! Something went wrong 😢");
-          console.error(error);
-        });
+        const data = {
+          name: document.getElementById("name").value,
+          email: document.getElementById("email").value,
+          phone: document.getElementById("phone").value,
+          location: document.getElementById("location").value,
+          hairlength: document.getElementById("hairlength").value,
+          condition: document.getElementById("condition").value,
+          message: document.getElementById("message").value
+        };
+
+        firebase.database().ref("pledges").push(data)
+          .then(() => {
+            alert("Thanks for pledging 💖");
+            form.reset();
+          })
+          .catch((error) => {
+            alert("Oops! Something went wrong 😢");
+            console.error(error);
+          });
+      });
     });
   </script>
 
